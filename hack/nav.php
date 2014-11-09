@@ -20,12 +20,12 @@
                 <li><a class="hsubs" href="register.php">Sign up</a>
                     
                 </li>
-                <li><a class="hsubs" href="about.php">About Us</a>
+                <li><a class="hsubs" href="index.php">About Us</a>
                    
                 </li>
-                <li><a href="about2.php">About Smart banking</a></li>
-                <li><a href="contact.php">Contact Us</a></li>
-                <li><a href="locate.php">Locate Us</a></li>
+                <li><a href="index.php">About Smart banking</a></li>
+                <li><a href="index.php">Contact Us</a></li>
+                <li><a href="index.php">Locate Us</a></li>
    
             </ul>
 </div>

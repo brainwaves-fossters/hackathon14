@@ -48,9 +48,32 @@
 </div>
 <div style="width:750px;height:700px;float:left;background-color:white;border-radius:5px;margin-left:10px;text-align:center">
 <br><br>
-<h1 style="text-align:center">Transaction Pending: 0</h1>
+
+<?php
+
+$id = $_POST['id'];
+$database = "bank";
+$con = mysqli_connect( "localhost", "home", "home125", "$database" );			// Connection to mysql server
+if( mysqli_connect_errno() )
+{
+	echo "Failed to connect mysql: mysqli_connect( \"localhost\", \"home\", \"home125\", \"$database\" ) ";
+}
+
+$query = "select status from customer where id = '" . $id . "' ; ";
+
+
+$result = mysqli_query( $con, $query );
+$row = mysqli_fetch_array( $result );
+
+$status = $row['status'];
+
+echo "
+<h1 style=\"text-align:center\">Transaction Pending: $status</h1>
 </div>
 </div>
+";
+
+?>
 <?php include "foot.php" ?>
  
 </body>

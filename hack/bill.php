@@ -8,6 +8,14 @@
         <link href="css/menu.css" rel="stylesheet" type="text/css" />
 
 </head>
+<script>
+function changeImage() {
+    var image = document.getElementById('myImage');
+    if (image.src.match("grid")) {
+        image.src = "qr.png";
+    } 
+}
+</script>
 <style>
 .btn {
   background: #d9344a;
@@ -39,8 +47,8 @@
 
 <body>
 <?php include "nav.php" ?>
-
-<?php
+	
+<?php 
 
 $database = "bank";
 $con = mysqli_connect( "localhost", "home", "home125", "$database" );			// Connection to mysql server
@@ -50,23 +58,14 @@ if( mysqli_connect_errno() )
 }
 
 $id = $_POST['id'];
-
-$query = "select * from customer where " . "id='$id'; ";
-//echo $query;
-
+$id2 = $_POST['id2'];
+echo $id;
+echo $id2;
+$query = "update customer set balance = balance - 340 where id = " . $id . " ; ";
+echo $query;
 $result = mysqli_query( $con, $query );
-if ( $result == 0 )
-	echo "Error in executing the query: $query <br>" ;
-
-$row = mysqli_fetch_array( $result );
-
-$pwd = $row['pwd'];
-$acc_no = $row['accno'];
-$name = $row['name'];
-$balance = $row['balance'];
-$phone = $row['phone'];
-
 ?>
+
 
 <div id="text" style="height:700px;padding:10px">
 <div style="width:200px;height:700px;float:left;background-color:white;border-radius:5px;">
@@ -76,75 +75,23 @@ $phone = $row['phone'];
 <hr>
 </div>
 <div style="width:750px;height:700px;float:left;background-color:white;border-radius:5px;margin-left:10px;text-align:center">
-<br>
-<h3> Welcome Guest!</h3>
-<br>
-<table style="margin-left:270px;">
-<tr>
-<td><form action="new_gift.php" method="POST">
-<?php	
-	echo "<input name=\"id\" value=$id type=\"text\" style=\"display:none\">";
+	<h3>Payment</h3>	
+	<br>
+	<h4>Payment to be made:Rs 340/-</h4>
+	<br><form action="bill.php" method="POST">
+	<?php echo "<input name=\"id\" value=$id type=\"text\" style=\"display:none\">";
+		echo "<input name=\"id2\" value=1 type=\"text\" style=\"display:none\">";	
+	 ?>
+	<input type="submit" class="btn" value="Confirm Payment" style="vertical-align:center"></input>
+	</form>
+
+<?php
+if($id2 == 1)
+{
+echo "<img src=\"tick.png\" >";
+}
+
 ?>
-
-<input type="submit" class="btn" value="New"></input>
-</form></td>
-<td><form action="status.php" method="POST">
-<?php	
-	echo "<input name=\"id\" value=$id type=\"text\" style=\"display:none\">";
-?>
-<input type="submit" class="btn" value="Status"></input>
-</form></td>
-</tr>
-</table>
-
-<br><br>
-<h3 style="text-align:center">Customer details</h3>
-<br>
-<table style="text-align:right;font-size:20px;margin-left:150px">
-<tr>
-	<td>AccNo : </td>
-	<td>
-		<?php
-			echo $acc_no;
-		?>
-	</td>
-</tr>
-<tr>
-	<td>Name : </td>
-	<td>
-		<?php
-			echo $name;
-		?>
-	</td>
-</tr>
-<tr>
-	<td>Balance : </td>
-	<td>
-		<?php
-			echo $balance;
-		?>
-	</td>
-</tr>
-<tr>
-	<td>Phone No : </td>
-	<td>
-		<?php
-			echo $phone;
-		?>
-	</td>
-</tr>
-<tr>
-	<td>User Id : </td>
-	<td>
-		<?php
-			echo $id;
-		?>
-	</td>
-</tr>
-</table>
-
-
-
 
 </div>
 </div>

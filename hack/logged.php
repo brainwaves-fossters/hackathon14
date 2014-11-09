@@ -69,6 +69,7 @@ $acc_no = $row['accno'];
 $name = $row['name'];
 $balance = $row['balance'];
 $phone = $row['phone'];
+$stat = $row['status1'];
 
 
 if( strcmp( $pwd, $old_pwd ) == 0 )
@@ -82,7 +83,17 @@ echo "
 <br>
 	<img src=\"user.png\" style=\"width:180px;height:200px;\">
 <br><br>
-<hr>
+<hr>";
+if($stat == 1)
+{
+echo " <p style=\"font-size:16px\">You have Payment request</p>
+<form action=\"ded.php\" method=\"POST\">
+<input name=\"acc\" value=$acc_no type=\"text\" style=\"display:none\">
+<input type=\"submit\" value=\"Accept\">"
+;
+}
+
+echo"
 </div>
 <div style=\"width:750px;height:700px;float:left;background-color:white;border-radius:5px;margin-left:10px;text-align:center\">
 <br>
@@ -90,10 +101,12 @@ echo "
 <br>
 <table style=\"margin-left:180px;\">
 <tr>
-<td><form action=\"payment.php\" method=\"\">
+<td><form action=\"pay1.php\" method=\"POST\">
+<input name=\"id\" value=$id type=\"text\" style=\"display:none\">
 <input type=\"submit\" class=\"btn\" value=\"Payment\"></input>
 </form></td>
-<td><form action=\"cardless.php\" method=\"\">
+<td><form action=\"cardless.php\" method=\"POST\">
+<input name=\"id\" value=$id type=\"text\" style=\"display:none\">
 <input type=\"submit\" class=\"btn\" value=\"Cardless ATM\"></input>
 </form></td>
 </tr>
@@ -108,23 +121,23 @@ echo "
 <br>
 <table style=\"text-align:right;font-size:20px;margin-left:150px\">
 <tr>
-	<td>AccNo:</td>
+	<td>AccNo: $acc_no</td>
 	<td></td>
 </tr>
 <tr>
-	<td>Name:</td>
+	<td>Name: $name</td>
 	<td></td>
 </tr>
 <tr>
-	<td>Balance:</td>
+	<td>Balance: $balance</td>
 	<td></td>
 </tr>
 <tr>
-	<td>Phone No:</td>
+	<td>Phone No: $phone</td>
 	<td></td>
 </tr>
 <tr>
-	<td>User Id:</td>
+	<td>User Id: $id</td>
 	<td></td>
 </tr>
 </table>

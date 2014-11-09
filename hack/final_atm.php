@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <head>
 <link rel="stylesheet" type="text/css" href="style.css">
@@ -38,8 +39,21 @@
 </style>
 
 <body>
-<?php include "nav.php" ?>
-
+<br><br>
+<div id="text" style="height:700px;padding:10px">
+<div style="width:150px;height:700px;float:left;background-color:white;border-radius:5px;">
+<br><br><br><br><br>
+<input type="submit" class="btn" value="    >    "></input><br><br><br>
+<input type="submit" class="btn" value="    >    "></input><br><br><br>
+<input type="submit" class="btn" value="    >    "></input><br><br><br>
+<input type="submit" class="btn" value="    >    "></input><br><br><br>
+</div>
+<div style="width:640px;height:700px;float:left;background-color:white;border-radius:5px;margin-left:10px;text-align:center">
+<br>
+<h2 style="text-align:center">ATM</h2>
+<br>
+<hr>
+<br><br><br>
 <?php
 
 $database = "bank";
@@ -49,106 +63,36 @@ if( mysqli_connect_errno() )
 	echo "Failed to connect mysql: mysqli_connect( \"localhost\", \"home\", \"home125\", \"$database\" ) ";
 }
 
-$id = $_POST['id'];
+$pin1 = $_POST['pin1'];
+$pin2 = $_POST['pin2'];
 
-$query = "select * from customer where " . "id='$id'; ";
-//echo $query;
+$new_otp = $pin1 . $pin2;
+$query = "select * from customer where otp = " . $new_otp . " ; ";
 
 $result = mysqli_query( $con, $query );
 if ( $result == 0 )
 	echo "Error in executing the query: $query <br>" ;
 
-$row = mysqli_fetch_array( $result );
+if( mysqli_num_rows($result) == NULL )
+	echo "Incorrect pin ";
+else
+{ 
+	$query2 = "update customer set balance = balance - giftamt, status = status - 1, otp = NULL where otp =  " . $new_otp . " ; " ;
+	$result = mysqli_query( $con, $query2 );
 
-$pwd = $row['pwd'];
-$acc_no = $row['accno'];
-$name = $row['name'];
-$balance = $row['balance'];
-$phone = $row['phone'];
-
+	echo "Transaction successful\n";
+}
 ?>
-
-<div id="text" style="height:700px;padding:10px">
-<div style="width:200px;height:700px;float:left;background-color:white;border-radius:5px;">
-<br>
-	<img src="user.png" style="width:180px;height:200px;">
-<br><br>
-<hr>
 </div>
-<div style="width:750px;height:700px;float:left;background-color:white;border-radius:5px;margin-left:10px;text-align:center">
-<br>
-<h3> Welcome Guest!</h3>
-<br>
-<table style="margin-left:270px;">
-<tr>
-<td><form action="new_gift.php" method="POST">
-<?php	
-	echo "<input name=\"id\" value=$id type=\"text\" style=\"display:none\">";
-?>
-
-<input type="submit" class="btn" value="New"></input>
-</form></td>
-<td><form action="status.php" method="POST">
-<?php	
-	echo "<input name=\"id\" value=$id type=\"text\" style=\"display:none\">";
-?>
-<input type="submit" class="btn" value="Status"></input>
-</form></td>
-</tr>
-</table>
-
-<br><br>
-<h3 style="text-align:center">Customer details</h3>
-<br>
-<table style="text-align:right;font-size:20px;margin-left:150px">
-<tr>
-	<td>AccNo : </td>
-	<td>
-		<?php
-			echo $acc_no;
-		?>
-	</td>
-</tr>
-<tr>
-	<td>Name : </td>
-	<td>
-		<?php
-			echo $name;
-		?>
-	</td>
-</tr>
-<tr>
-	<td>Balance : </td>
-	<td>
-		<?php
-			echo $balance;
-		?>
-	</td>
-</tr>
-<tr>
-	<td>Phone No : </td>
-	<td>
-		<?php
-			echo $phone;
-		?>
-	</td>
-</tr>
-<tr>
-	<td>User Id : </td>
-	<td>
-		<?php
-			echo $id;
-		?>
-	</td>
-</tr>
-</table>
-
-
-
-
+<div style="width:150px;height:700px;float:right;background-color:white;border-radius:5px;">
+<br><br><br><br><br>
+<input type="submit" class="btn" value="    <    "></input><br><br><br>
+<input type="submit" class="btn" value="    <    "></input><br><br><br>
+<input type="submit" class="btn" value="    <    "></input><br><br><br>
+<input type="submit" class="btn" value="    <    "></input><br><br><br>
 </div>
 </div>
-<?php include "foot.php" ?>
+
  
 </body>
 </html>
